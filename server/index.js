@@ -6,7 +6,7 @@ const multer = require('multer')
 /** Multer settings */
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/png']
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']
   if (!allowedTypes.includes(file.mimetype)) {
     const error = new Error('Wrong file type')
     error.code = "LIMIT_FILE_TYPES"
