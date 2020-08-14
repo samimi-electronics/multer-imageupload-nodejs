@@ -48,13 +48,11 @@ export default {
     selectFile() {
       let file = this.$refs.file.files[0]
       let MAX_FILE_SIZE = 200000
+      const tooLarge = file.size > MAX_FILE_SIZE
       console.log(file)
       const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']
-      if (!allowedTypes.includes(file.type)) {
-        this.message = 'Only image files are allowed'
-        this.error = true
-      } else if (file.size > MAX_FILE_SIZE) {
-        this.message = `Only files smaller than ${MAX_FILE_SIZE / 1000}Kb are allowed`
+      if (!allowedTypes.includes(file.type) && tooLarge) {
+        this.message = tooLarge ? `Files under ${MAX_FILE_SIZE / 1000}Kb are allowed` : 'Only image files are allowed'
         this.error = true
       } else {
         this.message = ''
