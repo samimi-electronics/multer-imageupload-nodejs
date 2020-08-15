@@ -15,12 +15,34 @@ const fileFilter = (req, file, cb) => {
   cb(null, true)
 }
 const MAX_FILE_SIZE = 200000
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/tmp')
+  },
+  filename: function (req, file, cb) {
+    let fileExtention = ''
+    switch (file.mimetype) {
+      case 'image/jpeg':
+        fileExtention = '.jpg'
+        break
+      case 'image/png':
+        fileExtention = '.png'
+        break
+      case 'image/gif':
+        fileExtention = '.gif'
+        break
+    }
+    console.log(file.mimetype, fileExtention)
+    cb(null, file.fieldname + Date.now() + fileExtention)
+  }
+})
 const upload = multer({
-  dest: './uploads/',
+  //dest: './uploads/',
   fileFilter,
   limits: {
     fileSize: MAX_FILE_SIZE
-  }
+  },
+  storage
 })
 
 const app = express()
